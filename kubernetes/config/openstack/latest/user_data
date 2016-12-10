@@ -189,7 +189,7 @@ write_files:
           - --etcd-servers=http://185.170.112.48:2379
           - --allow-privileged=true
           - --service-cluster-ip-range=10.103.0.0/16
-          - --secure-port=443
+          - --secure-port=6443
           - --advertise-address=185.170.112.48
           - --admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota
           - --tls-cert-file=/etc/kubernetes/ssl/node.pem
@@ -197,8 +197,8 @@ write_files:
           - --client-ca-file=/etc/kubernetes/ssl/ca.pem
           - --service-account-key-file=/etc/kubernetes/ssl/node-key.pem
           ports:
-          - containerPort: 443
-            hostPort: 443
+          - containerPort: 6443
+            hostPort: 6443
             name: https
           - containerPort: 8080
             hostPort: 8080
