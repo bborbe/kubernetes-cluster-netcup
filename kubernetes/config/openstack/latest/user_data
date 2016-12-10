@@ -55,11 +55,6 @@ coreos:
             [Unit]
             Requires=flanneld.service
             After=flanneld.service
-        - name: 10-wait-docker.conf
-          content: |
-            [Unit]
-            After=var-lib-docker.mount
-            Requires=var-lib-docker.mount
     - name: docker-cleanup.service
       content: |
         [Unit]
