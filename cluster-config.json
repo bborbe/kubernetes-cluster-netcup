@@ -1,0 +1,26 @@
+{
+	"kuberntes-version": "v1.4.6",
+	"region": "nc",
+	"update-reboot-strategy": "reboot",
+	"features": {
+		"kvm": false
+	},
+	"hosts": [
+		{
+			"name": "v22016124049440903.goodsrv.de",
+			"nodes": [
+				{
+					"name": "kubernetes",
+					"etcd": true,
+					"worker": true,
+					"master": true,
+					"nfsd": true,
+					"mac": "ea:96:69:06:f5:7d",
+					"address": "185.170.112.48/22",
+					"gateway": "185.170.112.1",
+					"dns": "8.8.8.8"
+				}
+			]
+		}
+	]
+}
