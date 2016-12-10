@@ -19,6 +19,8 @@ coreos:
   units:
     - name: systemd-sysctl.service
       command: restart
+    - name: iptables-restore.service
+      enable: true
     - name: 10-ens3.network
       content: |
         [Match]
@@ -55,6 +57,11 @@ coreos:
             [Unit]
             Requires=flanneld.service
             After=flanneld.service
+        - name: 20-wait-iptables.conf
+          content: |
+            [Unit]
+            After=iptables-restore.service
+            Requires=iptables-restore.service
     - name: docker-cleanup.service
       content: |
         [Unit]
@@ -140,6 +147,35 @@ coreos:
         [Install]
         WantedBy=multi-user.target
 write_files:
+  - path: /var/lib/iptables/rules-save
+    permissions: 0644
+    owner: root:root
+    content: |
+      *mangle
+      :PREROUTING ACCEPT [0:0]
+      :INPUT ACCEPT [0:0]
+      :FORWARD ACCEPT [0:0]
+      :OUTPUT ACCEPT [0:0]
+      :POSTROUTING ACCEPT [0:0]
+      COMMIT
+      *nat
+      :PREROUTING ACCEPT [0:0]
+      :INPUT ACCEPT [0:0]
+      :OUTPUT ACCEPT [0:0]
+      :POSTROUTING ACCEPT [0:0]
+      COMMIT
+      *filter
+      :INPUT DROP [0:0]
+      :FORWARD DROP [0:0]
+      :OUTPUT DROP [0:0]
+      -A INPUT -i lo -j ACCEPT
+      -A OUTPUT -o lo -j ACCEPT
+      -A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+      -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+      -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+      -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+      -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+      COMMIT
   - path: /etc/sysctl.d/vm_max_map_count.conf
     content: |
       vm.max_map_count=262144

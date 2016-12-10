@@ -3,6 +3,7 @@
 	"region": "nc",
 	"update-reboot-strategy": "reboot",
 	"features": {
+		"iptables": true,
 		"kvm": false
 	},
 	"hosts": [
