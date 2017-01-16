@@ -4,13 +4,13 @@ ssh_authorized_keys:
 hostname: kubernetes
 coreos:
   fleet:
-    metadata: "region=nc"
+    metadata: "region=netcup"
   update:
     reboot-strategy: reboot
   etcd2:
     name: "kubernetes"
     initial-cluster: "kubernetes=http://185.170.112.48:2380"
-    initial-cluster-token: "cluster-nc"
+    initial-cluster-token: "cluster-netcup"
     initial-cluster-state: "new"
     initial-advertise-peer-urls: "http://185.170.112.48:2380"
     advertise-client-urls: "http://185.170.112.48:2379"
