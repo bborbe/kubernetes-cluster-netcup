@@ -8,3 +8,9 @@ install:
 	go install github.com/bborbe/kubernetes_tools/bin/k8s_generate_configs
 download:
 	go get -u github.com/bborbe/kubernetes_tools/bin/k8s_generate_configs
+copy:
+	cp kubernetes/config/openstack/latest/user_data /var/lib/coreos-install/user_data
+restart:
+	systemctl stop kubelet
+	systemctl stop docker
+	coreos-cloudinit -from-file=/var/lib/coreos-install/user_data
