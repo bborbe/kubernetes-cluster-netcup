@@ -32,7 +32,8 @@
 						"-A INPUT -p tcp -m state --state NEW -m tcp --dport 587 -j ACCEPT",
 						"-A INPUT -p tcp -m state --state NEW -m tcp --dport 993 -j ACCEPT",
 						"-A INPUT -p tcp -m state --state NEW -m tcp --dport 2222 -j ACCEPT",
-						"-A INPUT -p tcp -m state --state NEW -m tcp --dport 6443 -j ACCEPT"
+						"-A INPUT -p tcp -m state --state NEW -m tcp --dport 6443 -j ACCEPT",
+						"-A INPUT -i docker0 -p tcp -m state --state NEW -m tcp --dport 10255 -j ACCEPT"
 					],
 					"iptables-nat-rules": [
 						"-A POSTROUTING -s 10.0.0.0/8 -o eth0 -j MASQUERADE",

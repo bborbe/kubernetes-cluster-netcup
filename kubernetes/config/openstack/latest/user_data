@@ -192,7 +192,7 @@ write_files:
       -A INPUT -p tcp -m state --state NEW -m tcp --dport 993 -j ACCEPT
       -A INPUT -p tcp -m state --state NEW -m tcp --dport 2222 -j ACCEPT
       -A INPUT -p tcp -m state --state NEW -m tcp --dport 6443 -j ACCEPT
-      -A INPUT -p tcp -m state --state NEW -m tcp --dport 10255 -i docker0 -j ACCEPT
+      -A INPUT -i docker0 -p tcp -m state --state NEW -m tcp --dport 10255 -j ACCEPT
       COMMIT
   - path: /etc/sysctl.d/vm_max_map_count.conf
     content: |
