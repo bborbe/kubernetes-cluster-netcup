@@ -1,5 +1,6 @@
 {
 	"kuberntes-version": "v1.6.7",
+	"etcd-version": 3,
 	"region": "netcup",
 	"update-reboot-strategy": "reboot",
 	"features": {
