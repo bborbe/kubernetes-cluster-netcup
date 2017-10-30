@@ -85,6 +85,14 @@ coreos:
         OnCalendar=*-*-* 0/4:00:00
         [Install]
         WantedBy=multi-user.target
+    - name: delete-kubernetes-manifests.service
+      content: |
+        [Unit]
+        Description=Delete Kubernetes Manifest Files
+        Before=docker.service
+        [Service]
+        Type=oneshot
+        ExecStart=-/bin/bash -c 'rm -f /etc/kubernetes/manifests/* /srv/kubernetes/manifests/*'
     - name: kubelet.service
       command: start
       content: |
@@ -111,7 +119,7 @@ coreos:
           --net=host \
           --privileged=true \
           --pid=host \
-          gcr.io/google_containers/hyperkube-amd64:v1.8.1 \
+          gcr.io/google_containers/hyperkube-amd64:v1.8.2 \
           /hyperkube kubelet \
             --containerized \
             --register-node=true \
@@ -238,7 +246,7 @@ write_files:
         hostNetwork: true
         containers:
         - name: kube-apiserver
-          image: gcr.io/google_containers/hyperkube-amd64:v1.8.1
+          image: gcr.io/google_containers/hyperkube-amd64:v1.8.2
           command:
           - /hyperkube
           - apiserver
@@ -366,7 +374,7 @@ write_files:
         hostNetwork: true
         containers:
         - name: kube-proxy
-          image: gcr.io/google_containers/hyperkube-amd64:v1.8.1
+          image: gcr.io/google_containers/hyperkube-amd64:v1.8.2
           command:
           - /hyperkube
           - proxy
@@ -394,7 +402,7 @@ write_files:
         hostNetwork: true
         containers:
         - name: kube-scheduler
-          image: gcr.io/google_containers/hyperkube-amd64:v1.8.1
+          image: gcr.io/google_containers/hyperkube-amd64:v1.8.2
           command:
           - /hyperkube
           - scheduler
@@ -418,7 +426,7 @@ write_files:
         hostNetwork: true
         containers:
         - name: kube-controller-manager
-          image: gcr.io/google_containers/hyperkube-amd64:v1.8.1
+          image: gcr.io/google_containers/hyperkube-amd64:v1.8.2
           command:
           - /hyperkube
           - controller-manager
