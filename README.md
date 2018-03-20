@@ -1,5 +1,17 @@
 # Kubernetes
 
+## Update cluster
+
+```
+ssh ...
+cd /kubernetes-cluster-nc
+git pull
+cp kubernetes/config/openstack/latest/user_data /var/lib/coreos-install/user_data
+systemctl stop kubelet
+systemctl stop docker
+coreos-cloudinit -from-file=/var/lib/coreos-install/user_data
+```
+
 ## Copyright and license
 
     Copyright (c) 2016, Benjamin Borbe <bborbe@rocketnews.de>
